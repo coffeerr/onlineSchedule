@@ -26,11 +26,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", schedule.getUserId());
         qw.eq("schedule_name", schedule.getScheduleName());
+        qw.ne("schedule_id", schedule.getScheduleId());
         Schedule s2 = scheduleMapper.selectOne(qw);
         if (s2 != null) {
             return -1;
         } else {
-            s2.setCreateTime(new Date());
+            schedule.setCreateTime(new Date());
             scheduleMapper.insert(schedule);
             Schedule s3 = scheduleMapper.selectOne(qw);
             return s3.getScheduleId();

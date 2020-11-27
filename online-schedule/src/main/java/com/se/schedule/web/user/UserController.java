@@ -21,7 +21,7 @@ import java.util.Map;
  * @time: 2020/11/26 4:17 下午
  */
 @Controller
-@RequestMapping(value = "user", method = {RequestMethod.GET, RequestMethod.POST})
+@RequestMapping(value = "user", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class UserController {
     @Autowired
     private UserService userService;
