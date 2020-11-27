@@ -18,14 +18,16 @@ import java.util.Date;
 public class UserModel {
     @JsonProperty("user_id")
     private int userId;
-    @JsonProperty("user_name")
+    @JsonProperty("account")
     private String userName;
     @JsonProperty("old_key")
     private String oldKey;
-    @JsonProperty("new_key")
+    @JsonProperty("New_key")
     private String newKey;
+    @JsonProperty("key")
+    private String key;
 
-    
+
     private Date createDate;
     private Date lastEditDate;
 }

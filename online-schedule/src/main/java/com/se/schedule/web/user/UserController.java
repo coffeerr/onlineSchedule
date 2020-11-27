@@ -21,19 +21,19 @@ import java.util.Map;
  * @time: 2020/11/26 4:17 下午
  */
 @Controller
-@RequestMapping(value = "user", method = {RequestMethod.GET, RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+@RequestMapping(value = "api", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/logincheck", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     @ResponseBody
-    private Map<String, Object> loginCheck(HttpServletRequest request) {
+    private Map<String, Object> loginCheck(@RequestBody UserModel userModel) {
         Map<String, Object> map = new HashMap<>();
         // 获取输入的帐号
-        String userName = HttpServletRequestUtil.getString(request, "account");
+        String userName = userModel.getUserName();
         // 获取输入的密码
-        String password = HttpServletRequestUtil.getString(request, "key");
+        String password = userModel.getKey();
 
         int loginCode = userService.loginByUserNameAndPwd(userName, password);
         if (loginCode == -1) {
@@ -48,14 +48,14 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
     @ResponseBody
-    private Map<String, Object> signUp(HttpServletRequest request) {
+    private Map<String, Object> signUp(@RequestBody UserModel userModel) {
         Map<String, Object> map = new HashMap<>();
         // 获取输入的帐号
-        String userName = HttpServletRequestUtil.getString(request, "account");
+        String userName = userModel.getUserName();
         // 获取输入的密码
-        String password = HttpServletRequestUtil.getString(request, "key");
+        String password = userModel.getKey();
 
         int loginCode = userService.signUpByUserNameAndPwd(userName, password);
         if (loginCode == -1) {
@@ -70,7 +70,7 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user", method = RequestMethod.PUT)
     @ResponseBody
     private Map<String, Object> update(@RequestBody UserModel userModel) {
         Map<String, Object> map = new HashMap<>();
@@ -93,24 +93,23 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping(value = "/admin", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/admin", method = RequestMethod.PUT)
     @ResponseBody
     private Map<String, Object> updateByAdmin(@RequestBody UserModel userModel) {
         Map<String, Object> map = new HashMap<>();
-        // 获取输入的帐号
-        String userName = userModel.getUserName();
+        int userId = userModel.getUserId();
         // 获取输入的密码
-        String password = userModel.getNewKey();
+        String password = userModel.getKey();
 
-        int loginCode = userService.signUpByUserNameAndPwd(userName, password);
-        if (loginCode == -1) {
+        boolean isUpdatedByAdmin = userService.updateByAdmin(userId, password);
+        if (!isUpdatedByAdmin) {
             map.put("code", "ERROR");
             map.put("message", "管理员修改用户失败！");
-            map.put("data", loginCode);
+            map.put("data", -1);
         } else {
             map.put("code", "OK");
             map.put("message", "管理员修改用户成功！");
-            map.put("data", loginCode);
+            map.put("data", 1);
         }
         return map;
     }
