@@ -1,6 +1,7 @@
 package com.se.schedule.service;
 
 import com.se.schedule.entity.User;
+import org.springframework.stereotype.Service;
 
 public interface UserService {
     /**
@@ -31,9 +32,9 @@ public interface UserService {
     boolean update(String userName, String oldPwd, String pwd);
 
     /**
-     * @Description: 管理员修改密码
      * @param
      * @return
+     * @Description: 管理员修改密码
      * @author Desmand
      * @Date 2020/11/26
      */
