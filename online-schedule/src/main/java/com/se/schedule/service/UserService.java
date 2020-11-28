@@ -5,38 +5,38 @@ import org.springframework.stereotype.Service;
 
 public interface UserService {
     /**
-     * @param
-     * @return 用户
-     * @Description: 登陆成功返回userID，失败返回-1
+     * @return int
      * @author Desmand
-     * @Date 2020/11/26
+     * @Description: 验证登陆 成功返回userID，失败返回-1
+     * @Date 6:03 下午 2020/11/28
+     * @Param [userName, pwd]
      */
     int loginByUserNameAndPwd(String userName, String pwd);
 
     /**
-     * @param
-     * @return ture or false
-     * @Description: 注册
+     * @return int
      * @author Desmand
-     * @Date 2020/11/26
+     * @Description: 注册用户
+     * @Date 6:03 下午 2020/11/28
+     * @Param [userName, pwd]
      */
     int signUpByUserNameAndPwd(String userName, String pwd);
 
     /**
-     * @param
-     * @return
-     * @Description: ⽤户修改密码
+     * @return boolean
      * @author Desmand
-     * @Date 2020/11/26
+     * @Description: 修改用户
+     * @Date 6:03 下午 2020/11/28
+     * @Param [userName, oldPwd, pwd]
      */
     boolean update(String userName, String oldPwd, String pwd);
 
     /**
-     * @param
-     * @return
-     * @Description: 管理员修改密码
+     * @return boolean
      * @author Desmand
-     * @Date 2020/11/26
+     * @Description: 管理员修改用户
+     * @Date 6:04 下午 2020/11/28
+     * @Param [userId, pwd]
      */
     boolean updateByAdmin(int userId, String pwd);
 }

@@ -6,48 +6,48 @@ import java.util.List;
 
 public interface ScheduleService {
     /**
-     * @param
-     * @return
+     * @return int
+     * @author Desmand
      * @Description: 新建⽇程
-     * @author Desmand
-     * @Date 2020/11/27
+     * @Date 6:01 下午 2020/11/28
+     * @Param [schedule]
      */
-    public int createSchedule(Schedule schedule);
+    int createSchedule(Schedule schedule);
 
     /**
-     * @param
-     * @return
+     * @return com.se.schedule.entity.Schedule
+     * @author Desmand
      * @Description: 获取⽇程
-     * @author Desmand
-     * @Date 2020/11/27
+     * @Date 6:02 下午 2020/11/28
+     * @Param [userId, scheduleId]
      */
-    public Schedule getSchedule(int userId, int scheduleId);
+    Schedule getSchedule(int userId, int scheduleId);
 
     /**
-     * @param
-     * @return
+     * @return java.util.List<com.se.schedule.entity.Schedule>
+     * @author Desmand
      * @Description: 获取⽇程列表
-     * @author Desmand
-     * @Date 2020/11/27
+     * @Date 6:02 下午 2020/11/28
+     * @Param [userID, statusFlag]
      */
-    public List<Schedule> getScheduleList(int userID, String statusFlag);
+    List<Schedule> getScheduleList(int userID, String statusFlag);
 
     /**
-     * @param
-     * @return
+     * @return int
+     * @author Desmand
      * @Description: 修改日程
-     * @author Desmand
-     * @Date 2020/11/27
+     * @Date 6:02 下午 2020/11/28
+     * @Param [schedule]
      */
-    public int updateSchedule(Schedule schedule);
+    int updateSchedule(Schedule schedule);
 
     /**
-     * @param
-     * @return
-     * @Description: 删除日程
+     * @return int
      * @author Desmand
-     * @Date 2020/11/27
+     * @Description: 删除日程
+     * @Date 6:02 下午 2020/11/28
+     * @Param [userId, scheduleId, recycle_bin]
      */
-    public int deleteSchedule(int userId, int scheduleId, boolean recycle_bin);
+    int deleteSchedule(int userId, int scheduleId, boolean recycle_bin);
 
 }

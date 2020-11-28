@@ -41,4 +41,17 @@ public class User implements Serializable {
     @JsonProperty("last_edit_time")
     @TableField("last_edit_time")
     private Date lastEditTime;
+
+    @JsonProperty("pin_flag")
+    @TableField("pin_flag")
+    private String pinFlag;
+
+    @JsonProperty("delete_flag")
+    @TableField("delete_flag")
+    private String deleteFlag;
+
+    @JsonProperty("modify_time")
+    @TableField("modify_time")
+    private String modifyTime;
+
 }
