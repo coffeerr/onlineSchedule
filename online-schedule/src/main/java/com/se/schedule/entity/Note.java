@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @description:
  * @author: Desmand
@@ -27,16 +29,36 @@ public class Note {
     private String noteTitle;
 
     @JsonProperty("user_id")
-    @TableId(value = "user_id")
+    @TableField("user_id")
     private int userId;
 
     @JsonProperty("todo_id")
-    @TableId(value = "todo_id")
+    @TableField("todo_id")
     private int todoId;
 
+
+    @JsonProperty("remarks")
+    @TableField("remarks")
     private String remarks;
 
     @JsonProperty("tag_id")
-    @TableId(value = "tag_id")
+    @TableField("tag_id")
     private int tagId;
+
+
+    @JsonProperty("create_time")
+    @TableField("create_time")
+    private Date createTime;
+
+    @JsonProperty("modify_time")
+    @TableField("modify_time")
+    private Date lastEditTime;
+
+    @JsonProperty("pin_flag")
+    @TableField("pin_flag")
+    private String pinFlag;
+
+    @JsonProperty("delete_flag")
+    @TableField("delete_flag")
+    private String binFlag;
 }

@@ -40,11 +40,11 @@ public class ScheduleController {
         int scheduleId = scheduleService.createSchedule(schedule);
         if (scheduleId == -1) {
             map.put("code", "ERROR");
-            map.put("message", "新建⽇程失败");
+            map.put("message", "创建⽇程失败");
             map.put("data", -1);
         } else {
             map.put("code", "OK");
-            map.put("message", "新建⽇程成功");
+            map.put("message", "创建⽇程成功");
             map.put("data", scheduleId);
         }
         return map;
@@ -69,11 +69,11 @@ public class ScheduleController {
         Schedule schedule = scheduleService.getSchedule(userId, scheduleId);
         if (schedule == null) {
             map.put("code", "ERROR");
-            map.put("message", "新建⽇程失败");
+            map.put("message", "获得⽇程失败");
             map.put("data", -1);
         } else {
             map.put("code", "OK");
-            map.put("message", "新建⽇程成功");
+            map.put("message", "获得⽇程成功");
             map.put("data", schedule);
         }
         return map;
@@ -109,7 +109,7 @@ public class ScheduleController {
         int rows = scheduleService.updateSchedule(schedule);
         if (rows > 0) {
             map.put("code", "OK");
-            map.put("message", "获取⽇程列表成功");
+            map.put("message", "修改日程成功");
             map.put("data", 1);
         } else {
             map.put("code", "ERROR");
@@ -130,7 +130,7 @@ public class ScheduleController {
         int rows = scheduleService.deleteSchedule(userId, scheduleId, recycleBin);
         if (rows > 0) {
             map.put("code", "OK");
-            map.put("message", "删除⽇程列表成功");
+            map.put("message", "删除⽇程成功");
             map.put("data", 1);
         } else {
             map.put("code", "ERROR");
