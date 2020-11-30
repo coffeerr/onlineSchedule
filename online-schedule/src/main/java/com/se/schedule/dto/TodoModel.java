@@ -30,7 +30,7 @@ public class TodoModel {
 
     @JsonProperty("todo_list")
     @TableField("todo_list")
-    private List<TodoItem> todoList;
+    private List<TodoItem> todoItemList;
 
     @JsonProperty("create_time")
     @TableField("create_time")

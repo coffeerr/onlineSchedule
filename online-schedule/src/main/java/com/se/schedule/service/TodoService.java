@@ -1,5 +1,6 @@
 package com.se.schedule.service;
 
+import com.se.schedule.dto.TodoModel;
 import com.se.schedule.entity.Todo;
 import com.se.schedule.entity.TodoItem;
 
@@ -20,7 +21,7 @@ public interface TodoService {
      * @Date 10:24 下午 2020/11/29
      * @Param [userId, todoId]
      */
-    Todo getTodo(int userId, int todoId);
+    TodoModel getTodo(int userId, int todoId);
 
     /**
      * @return int

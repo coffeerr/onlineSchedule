@@ -19,16 +19,23 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public int createNote(Note note) {
         note.setCreateTime(new Date());
-        int rows = noteMapper.insert(note);
-        if (rows > 0) {
-            QueryWrapper qw = new QueryWrapper();
-            qw.eq("user_id", note.getUserId());
-            qw.eq("note_title", note.getNoteTitle());
-            qw.eq("remarks", note.getRemarks());
-            Note note2 = noteMapper.selectOne(qw);
-            return note2.getNoteId();
-        } else {
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("note_id", note.getNoteId());
+        List<Note> list = noteMapper.selectList(qw);
+        if (list.size() > 0) {
             return -1;
+        } else {
+            int rows = noteMapper.insert(note);
+            if (rows > 0) {
+                QueryWrapper qw2 = new QueryWrapper();
+                qw2.eq("user_id", note.getUserId());
+                qw2.eq("note_title", note.getNoteTitle());
+                qw2.eq("remarks", note.getRemarks());
+                Note note2 = noteMapper.selectOne(qw2);
+                return note2.getNoteId();
+            } else {
+                return -1;
+            }
         }
 //        user_id：⽤户 id，数字
 //        note_title：记事标题，字符串

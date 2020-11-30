@@ -36,11 +36,11 @@ public class NoteController {
         if (rows > 0) {
             map.put("code", "OK");
             map.put("message", "新建记事成功");
-            map.put("data", "rows");
+            map.put("data", rows);
         } else {
             map.put("code", "ERROR");
             map.put("message", "新建记事失败");
-            map.put("data", "rows");
+            map.put("data", rows);
         }
         return map;
     }
