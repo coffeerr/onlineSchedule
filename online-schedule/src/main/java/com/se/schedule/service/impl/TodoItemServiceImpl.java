@@ -9,6 +9,7 @@ import com.se.schedule.util.StringListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,6 +84,21 @@ public class TodoItemServiceImpl implements TodoItemService {
 
     @Override
     public int createTodoItemList(String todoItemList, Todo todo) {
+        String[] nameList = todoItemList.split("#");
+        List<TodoItem> list = new ArrayList<>();
+        for (String s : nameList) {
+            TodoItem todoItem = new TodoItem();
+            todoItem.setTodoItemName(s);
+            todoItem.setUserId(todo.getUserId());
+            todoItem.setCreateTime(new Date());
+            todoItem.setTodoId(todo.getTodoId());
+            list.add(todoItem);
+//            todoItem.setTodoItemStatus();
+        }
+        int rows = 0;
+        for (TodoItem todoItem : list) {
+            rows += todoItemMapper.insert(todoItem);
+        }
         return 0;
     }
 
