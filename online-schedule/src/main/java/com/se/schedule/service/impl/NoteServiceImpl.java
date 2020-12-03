@@ -19,6 +19,8 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public int createNote(Note note) {
         note.setCreateTime(new Date());
+        note.setBinFlag("false");
+        note.setBinFlag("false");
         QueryWrapper qw = new QueryWrapper();
         qw.eq("note_id", note.getNoteId());
         List<Note> list = noteMapper.selectList(qw);

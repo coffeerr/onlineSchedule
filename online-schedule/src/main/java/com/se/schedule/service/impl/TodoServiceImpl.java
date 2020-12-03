@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -79,10 +80,11 @@ public class TodoServiceImpl implements TodoService {
     public int updateTodo(Todo todo) {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("todo_id", todo.getTodoId());
+        todo.setLastEditTime(new Date());
         int rows = todoMapper.update(todo, qw);
         if (rows > 0) {
             //更新清单项目
-            todoItemService.updateTodoItemList(todo.getTodoList(),todo);
+            todoItemService.updateTodoItemList(todo.getTodoList(), todo);
             return todo.getTodoId();
         } else {
             return -1;

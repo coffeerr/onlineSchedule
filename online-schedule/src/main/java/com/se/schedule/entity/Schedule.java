@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("schedule")
+@TableName("tb_schedule")
 public class Schedule {
     @JsonProperty("schedule_id")
     private int scheduleId;

@@ -19,7 +19,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("user") //对应表名
+@TableName("tb_user") //对应表名
 public class User implements Serializable {
     @JsonProperty("user_id")
     @TableId(value = "user_id")
@@ -42,16 +42,19 @@ public class User implements Serializable {
     @TableField("last_edit_time")
     private Date lastEditTime;
 
-    @JsonProperty("pin_flag")
-    @TableField("pin_flag")
-    private String pinFlag;
 
-    @JsonProperty("delete_flag")
-    @TableField("delete_flag")
-    private String deleteFlag;
 
-    @JsonProperty("modify_time")
-    @TableField("modify_time")
-    private String modifyTime;
+
+    @JsonProperty("user_type")
+    @TableField("user_type")
+    private int userType;
+
+    @JsonProperty("schedule_num")
+    @TableField("schedule_num")
+    private int scheduleNum;
+
+    @JsonProperty("note_num")
+    @TableField("note_num")
+    private int noteNum;
 
 }

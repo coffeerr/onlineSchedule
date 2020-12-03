@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         user.setUserName(userName);
         user.setPassword(pwd);
         user.setCreateTime(new Date());
+        user.setUserType(1);
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_name", userName);
         User user2 = userMapper.selectOne(qw);
@@ -74,6 +75,7 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
 
     @Override
     public boolean updateByAdmin(int userId, String pwd) {

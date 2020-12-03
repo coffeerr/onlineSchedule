@@ -2,6 +2,7 @@ package com.se.schedule.web.user;
 
 import com.se.schedule.dto.UserModel;
 import com.se.schedule.entity.User;
+import com.se.schedule.service.AdminService;
 import com.se.schedule.service.UserService;
 import com.se.schedule.util.HttpServletRequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private AdminService adminService;
 
     @RequestMapping(value = "/user/login", method = RequestMethod.POST)
     @ResponseBody
