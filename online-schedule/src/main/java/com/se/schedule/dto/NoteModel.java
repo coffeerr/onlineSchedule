@@ -1,9 +1,14 @@
 package com.se.schedule.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.se.schedule.entity.TodoItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @description:
@@ -18,6 +23,27 @@ public class NoteModel {
     private int userId;
     @JsonProperty("note_id")
     private int noteId;
-    @JsonProperty("recycle_bin")
+    @JsonProperty("tag_id")
+    private int tagId;
+
+    @JsonProperty("note_title")
+    private String noteTitle;
+
+    @JsonProperty("remarks")
+    private String remarks;
+
+
+    @JsonProperty("pin_flag")
+    private boolean pinFlag;
+
+    @JsonProperty("delete_flag")
     private boolean recycleBin;
+
+    @JsonProperty("modify_time")
+    private Date lastEditTime;
+
+
+    @JsonProperty("todo_list")
+    @TableField("todo_list")
+    private List<TodoItem> todoItemList;
 }

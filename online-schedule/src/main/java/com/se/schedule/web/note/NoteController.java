@@ -5,6 +5,7 @@ import com.se.schedule.entity.Note;
 import com.se.schedule.entity.Schedule;
 import com.se.schedule.service.NoteService;
 import com.se.schedule.util.HttpServletRequestUtil;
+import com.se.schedule.util.StringListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -53,11 +54,22 @@ public class NoteController {
         int userId = HttpServletRequestUtil.getInt(request, "user_id");
         int noteId = HttpServletRequestUtil.getInt(request, "note_id");
         Note curNote = noteService.getNote(userId, noteId);
-
+        NoteModel noteModel = new NoteModel();
+        noteModel.setNoteId(curNote.getNoteId());
+        noteModel.setLastEditTime(curNote.getLastEditTime());
+        noteModel.setNoteTitle(curNote.getNoteTitle());
+        boolean pinFlag = curNote.getPinFlag().equals("true") ? true : false;
+        boolean recycleBin = curNote.getBinFlag().equals("true") ? true : false;
+        noteModel.setPinFlag(pinFlag);
+        noteModel.setRecycleBin(recycleBin);
+        noteModel.setTagId(curNote.getTagId());
+        noteModel.setRemarks(curNote.getRemarks());
+        noteModel.setTodoItemList(StringListUtil.getTodoItemListByNote(curNote, curNote.getTodoList()));
+        noteModel.setUserId(curNote.getUserId());
         if (curNote != null) {
             map.put("code", "OK");
             map.put("message", "获取记事成功");
-            map.put("data", curNote);
+            map.put("data", noteModel);
         } else {
             map.put("code", "ERROR");
             map.put("message", "获取记事失败");
@@ -73,7 +85,7 @@ public class NoteController {
         int userId = HttpServletRequestUtil.getInt(request, "user_id");
         int tagId = HttpServletRequestUtil.getInt(request, "tag_id");
         String status_flag = HttpServletRequestUtil.getString(request, "status_flag");
-        List<Note> list = noteService.getNoteList(userId, tagId, status_flag);
+        List<NoteModel> list = noteService.getNoteList(userId, tagId, status_flag);
 
         if (list.size() > 0) {
             map.put("code", "OK");

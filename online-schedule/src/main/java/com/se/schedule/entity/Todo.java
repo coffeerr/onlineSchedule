@@ -35,6 +35,7 @@ public class Todo {
     @TableId(value = "todo_id")
     private int todoId;
 
+
     @JsonProperty("todo_title")
     @TableField("todo_title")
     @TableId(value = "todo_title")

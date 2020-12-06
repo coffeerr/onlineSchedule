@@ -1,12 +1,15 @@
 package com.se.schedule.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.se.schedule.dto.NoteModel;
 import com.se.schedule.entity.Note;
 import com.se.schedule.mapper.NoteMapper;
 import com.se.schedule.service.NoteService;
+import com.se.schedule.util.StringListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -39,12 +42,7 @@ public class NoteServiceImpl implements NoteService {
                 return -1;
             }
         }
-//        user_id：⽤户 id，数字
-//        note_title：记事标题，字符串
-//        todo_id：清单 id，数字
-//        remarks：备注字段，字符串
-//        pin_flag：固定标记，布尔值（true/false）
-//        tag_id：标签 id，数字
+
     }
 
     @Override
@@ -62,14 +60,30 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public List<Note> getNoteList(int userId, int tagId, String statusFlag) {
+    public List<NoteModel> getNoteList(int userId, int tagId, String statusFlag) {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", userId);
         qw.eq("tag_id", tagId);
         qw.eq("pin_flag", statusFlag);
         List<Note> list = noteMapper.selectList(qw);
+        List<NoteModel> noteModels = new ArrayList<>();
+        for (Note curNote : list) {
+            NoteModel noteModel = new NoteModel();
+            noteModel.setNoteId(curNote.getNoteId());
+            noteModel.setLastEditTime(curNote.getLastEditTime());
+            noteModel.setNoteTitle(curNote.getNoteTitle());
+            boolean pinFlag = curNote.getPinFlag().equals("true") ? true : false;
+            boolean recycleBin = curNote.getBinFlag().equals("true") ? true : false;
+            noteModel.setPinFlag(pinFlag);
+            noteModel.setRecycleBin(recycleBin);
+            noteModel.setTagId(curNote.getTagId());
+            noteModel.setRemarks(curNote.getRemarks());
+            noteModel.setTodoItemList(StringListUtil.getTodoItemListByNote(curNote, curNote.getTodoList()));
+            noteModel.setUserId(curNote.getUserId());
+            noteModels.add(noteModel);
+        }
         if (list.size() > 0) {
-            return list;
+            return noteModels;
         } else {
             return null;
         }

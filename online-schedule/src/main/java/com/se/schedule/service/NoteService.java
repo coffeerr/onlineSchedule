@@ -1,5 +1,6 @@
 package com.se.schedule.service;
 
+import com.se.schedule.dto.NoteModel;
 import com.se.schedule.entity.Note;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public interface NoteService {
      * @Date 6:01 下午 2020/11/28
      * @Param [userId, tagId, statusFlag]
      */
-    List<Note> getNoteList(int userId, int tagId, String statusFlag);
+    List<NoteModel> getNoteList(int userId, int tagId, String statusFlag);
 
     /**
      * @return int

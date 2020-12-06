@@ -1,5 +1,6 @@
 package com.se.schedule.util;
 
+import com.se.schedule.entity.Note;
 import com.se.schedule.entity.Schedule;
 import com.se.schedule.entity.Todo;
 import com.se.schedule.entity.TodoItem;
@@ -24,11 +25,35 @@ public class StringListUtil {
         List<TodoItem> list = new ArrayList<>();
         String[] strs = s.split("#");
         for (String i : strs) {
+            if(i.equals(""))continue;
+            String[] gets = i.split(",");
+            String todoItemName = gets[0];
+            String todoItemStatus = gets[1].equals("0") ? "undone" : "done";
             TodoItem todoItem = new TodoItem();
             todoItem.setCreateTime(new Date());
             todoItem.setTodoId(todo.getTodoId());
-            todoItem.setTodoItemName(i);
+            todoItem.setTodoItemName(todoItemName);
             todoItem.setUserId(todo.getUserId());
+            todoItem.setTodoItemStatus(todoItemStatus);
+            list.add(todoItem);
+        }
+        return list;
+    }
+
+    public static List<TodoItem> getTodoItemListByNote(Note note, String s) {
+        List<TodoItem> list = new ArrayList<>();
+        String[] strs = s.split("#");
+        for (String i : strs) {
+            if(i.equals(""))continue;
+            String[] gets = i.split(",");
+            String todoItemName = gets[0];
+            String todoItemStatus = gets[1].equals("0") ? "undone" : "done";
+            TodoItem todoItem = new TodoItem();
+            todoItem.setCreateTime(new Date());
+            todoItem.setNoteId(note.getNoteId());
+            todoItem.setTodoItemName(todoItemName);
+            todoItem.setUserId(note.getUserId());
+            todoItem.setTodoItemStatus(todoItemStatus);
             list.add(todoItem);
         }
         return list;
