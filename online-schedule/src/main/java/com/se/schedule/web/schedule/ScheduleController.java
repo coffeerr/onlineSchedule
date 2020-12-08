@@ -128,13 +128,17 @@ public class ScheduleController {
         int scheduleId = scheduleModel.getScheduleId();
         boolean recycleBin = scheduleModel.isRecycleBin();
         int rows = scheduleService.deleteSchedule(userId, scheduleId, recycleBin);
-        if (rows > 0) {
+        if (rows == 1) {
             map.put("code", "OK");
-            map.put("message", "删除⽇程成功");
+            map.put("message", "移入回收站成功");
             map.put("data", 1);
-        } else {
+        } else if(rows==-1){
             map.put("code", "ERROR");
-            map.put("message", "删除日程失败");
+            map.put("message", "修改日程失败");
+            map.put("data", -1);
+        }else if(rows==2){
+            map.put("code", "ERROR");
+            map.put("message", "修改日程失败");
             map.put("data", -1);
         }
         return map;

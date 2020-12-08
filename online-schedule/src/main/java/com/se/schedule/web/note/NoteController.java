@@ -118,21 +118,25 @@ public class NoteController {
 
     @RequestMapping(value = "/note", method = RequestMethod.DELETE)
     @ResponseBody
-    public Map<String, Object> daleteNote(@RequestBody NoteModel noteModel) {
+    public Map<String, Object> deleteNote(@RequestBody NoteModel noteModel) {
         Map<String, Object> map = new HashMap<>();
         Note note = new Note();
         note.setUserId(noteModel.getUserId());
         note.setNoteId(noteModel.getNoteId());
         boolean recycleBin = noteModel.isRecycleBin();
         int rows = noteService.deleteNote(noteModel.getUserId(), noteModel.getNoteId(), recycleBin);
-        if (rows > 0) {
+        if (rows == 1) {
             map.put("code", "OK");
-            map.put("message", "删除记事成功");
-            map.put("data", rows);
-        } else {
+            map.put("message", "移入回收站成功");
+            map.put("data", 1);
+        } else if(rows==-1){
             map.put("code", "ERROR");
-            map.put("message", "删除记事失败");
-            map.put("data", "-1");
+            map.put("message", "修改记事失败");
+            map.put("data", -1);
+        }else if(rows==2){
+            map.put("code", "ERROR");
+            map.put("message", "修改记事失败");
+            map.put("data", -1);
         }
         return map;
     }

@@ -45,8 +45,4 @@ public class Schedule {
     @TableField("bin_flag")
     private String binFlag;
 
-    @JsonProperty("todo_list")
-    @TableField("todo_list")
-    private String todoList;
-
 }

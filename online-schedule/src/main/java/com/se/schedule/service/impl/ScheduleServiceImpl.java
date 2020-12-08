@@ -63,7 +63,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 //        }
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", userID);
-        qw.eq("pin_flag", statusFlag);
+        //qw.eq("pin_flag", statusFlag);
+        if (statusFlag == null || statusFlag.equals("")) {
+
+        } else {
+            qw.eq("pin_flag", statusFlag);
+        }
         List<Schedule> list = scheduleMapper.selectList(qw);
         return list;
     }
@@ -86,6 +91,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         //如果回收站标志为否，则直接删除
         if (!recycle_bin) {
             rows = scheduleMapper.delete(qw);
+            if (rows == 1) {
+                return 2;
+            } else {
+                return -1;
+            }
         } else {
             Schedule schedule = new Schedule();
             schedule.setUserId(userId);
@@ -93,7 +103,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             schedule.setBinFlag("false");
             schedule.setLastEditTime(new Date());
             rows = scheduleMapper.update(schedule, qw);
+            if (rows == 1) {
+                return 1;
+            } else {
+                return -1;
+            }
+
         }
-        return rows;
     }
 }

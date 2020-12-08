@@ -64,7 +64,11 @@ public class NoteServiceImpl implements NoteService {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", userId);
         qw.eq("tag_id", tagId);
-        qw.eq("pin_flag", statusFlag);
+        if (statusFlag == null || statusFlag.equals("")) {
+
+        } else {
+            qw.eq("pin_flag", statusFlag);
+        }
         List<Note> list = noteMapper.selectList(qw);
         List<NoteModel> noteModels = new ArrayList<>();
         for (Note curNote : list) {
@@ -109,6 +113,11 @@ public class NoteServiceImpl implements NoteService {
         int rows;
         if (!recycleBin) {
             rows = noteMapper.delete(qw);
+            if (rows == 1) {
+                return 2;
+            } else {
+                return -1;
+            }
         } else {
             Note note = new Note();
             note.setUserId(userId);
@@ -116,7 +125,11 @@ public class NoteServiceImpl implements NoteService {
             note.setBinFlag("false");
             note.setLastEditTime(new Date());
             rows = noteMapper.update(note, qw);
+            if (rows == 1) {
+                return 1;
+            } else {
+                return -1;
+            }
         }
-        return rows;
     }
 }
