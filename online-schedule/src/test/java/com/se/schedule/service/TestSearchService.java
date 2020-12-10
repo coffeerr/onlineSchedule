@@ -1,5 +1,6 @@
 package com.se.schedule.service;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ public class TestSearchService {
     @Autowired
     SearchService searchService;
     @Test
+    @Ignore
     public void testSearch(){
         //List<Object> list= searchService.getSearchKeyWord("#");
        // System.out.println(list.toString());

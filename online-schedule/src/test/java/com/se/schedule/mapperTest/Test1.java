@@ -3,6 +3,7 @@ package com.se.schedule.mapperTest;
 import com.se.schedule.entity.User;
 import com.se.schedule.mapper.UserMapper;
 import com.se.schedule.service.UserService;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,12 +25,14 @@ public class Test1 {
     private UserService userService;
 
     @Test
+    @Ignore
     public void Testlist() {
 //        List<User> users = userMapper.selectList(null);
 //        System.out.println(users.get(0).getUserName());
     }
 
     @Test
+    @Ignore
     public void testSignup() {
         User user = new User();
         user.setUserName("Kongfu102");
@@ -40,6 +43,7 @@ public class Test1 {
     }
 
     @Test
+    @Ignore
     public void testUpdate() {
         User user = new User();
         user.setUserName("Kongfu");
@@ -50,6 +54,7 @@ public class Test1 {
         System.out.println(userService.update(user.getUserName(), oldPassword, pwd));
     }
     @Test
+    @Ignore
     public void testUpdateByAdmin() {
         System.out.println(userService.updateByAdmin(13,"123"));
 

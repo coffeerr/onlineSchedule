@@ -3,6 +3,7 @@ package com.se.schedule.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.se.schedule.dto.NoteModel;
 import com.se.schedule.entity.Note;
+import com.se.schedule.entity.Schedule;
 import com.se.schedule.mapper.NoteMapper;
 import com.se.schedule.service.NoteService;
 import com.se.schedule.util.StringListUtil;
@@ -22,8 +23,7 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public int createNote(Note note) {
         note.setCreateTime(new Date());
-        note.setBinFlag("false");
-        note.setBinFlag("false");
+        note.setBinFlag("true");
         QueryWrapper qw = new QueryWrapper();
         qw.eq("note_id", note.getNoteId());
         List<Note> list = noteMapper.selectList(qw);
@@ -66,8 +66,14 @@ public class NoteServiceImpl implements NoteService {
         qw.eq("tag_id", tagId);
         if (statusFlag == null || statusFlag.equals("")) {
 
-        } else {
-            qw.eq("pin_flag", statusFlag);
+        } else if (statusFlag.equals("pin")) {
+            qw.eq("pin_flag", "true");
+            qw.eq("bin_flag", "true");
+        } else if (statusFlag.equals("nopin")) {
+            qw.eq("pin_flag", "false");
+            qw.eq("bin_flag", "true");
+        } else if (statusFlag.equals("delete")) {
+            qw.eq("bin_flag", "false");
         }
         List<Note> list = noteMapper.selectList(qw);
         List<NoteModel> noteModels = new ArrayList<>();

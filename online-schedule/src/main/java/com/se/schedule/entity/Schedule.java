@@ -41,6 +41,7 @@ public class Schedule {
     private Date lastEditTime;
     @JsonProperty("pin_flag")
     private String pinFlag;
+
     @JsonProperty("delete_flag")
     @TableField("bin_flag")
     private String binFlag;

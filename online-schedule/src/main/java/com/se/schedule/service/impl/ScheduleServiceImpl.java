@@ -32,6 +32,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             return -1;
         } else {
             schedule.setCreateTime(new Date());
+            schedule.setBinFlag("true");
             scheduleMapper.insert(schedule);
             Schedule s3 = scheduleMapper.selectOne(qw);
             return s3.getScheduleId();
@@ -66,8 +67,14 @@ public class ScheduleServiceImpl implements ScheduleService {
         //qw.eq("pin_flag", statusFlag);
         if (statusFlag == null || statusFlag.equals("")) {
 
-        } else {
-            qw.eq("pin_flag", statusFlag);
+        } else if (statusFlag.equals("pin")) {
+            qw.eq("pin_flag", "true");
+            qw.eq("bin_flag", "true");
+        } else if (statusFlag.equals("nopin")) {
+            qw.eq("pin_flag", "false");
+            qw.eq("bin_flag", "true");
+        } else if (statusFlag.equals("delete")) {
+            qw.eq("bin_flag", "false");
         }
         List<Schedule> list = scheduleMapper.selectList(qw);
         return list;
