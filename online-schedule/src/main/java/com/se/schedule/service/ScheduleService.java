@@ -50,4 +50,12 @@ public interface ScheduleService {
      */
     int deleteSchedule(int userId, int scheduleId, boolean recycle_bin);
 
+    /**
+     * @return int
+     * @author Desmand
+     * @Description: 还原日程
+     * @Date 8:58 上午 2020/12/15
+     * @Param [userId, scheduled]
+     */
+    int restoreSchedule(int userId, int scheduled);
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -129,13 +130,31 @@ public class NoteController {
             map.put("code", "OK");
             map.put("message", "移入回收站成功");
             map.put("data", 1);
-        } else if(rows==-1){
+        } else if (rows == -1) {
             map.put("code", "ERROR");
             map.put("message", "修改记事失败");
             map.put("data", -1);
-        }else if(rows==2){
+        } else if (rows == 2) {
+            map.put("code", "OK");
+            map.put("message", "删除记事成功");
+            map.put("data", 2);
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/note/restore", method = RequestMethod.PUT)
+    @ResponseBody
+    public Map<String, Object> restoreSchedule(@RequestBody Note note) {
+        Map<String, Object> map = new HashMap<>();
+        note.setLastEditTime(new Date());
+        int rows = noteService.restoreNote(note.getUserId(), note.getNoteId());
+        if (rows > 0) {
+            map.put("code", "OK");
+            map.put("message", "还原日程成功");
+            map.put("data", 1);
+        } else {
             map.put("code", "ERROR");
-            map.put("message", "修改记事失败");
+            map.put("message", "还原日程失败");
             map.put("data", -1);
         }
         return map;

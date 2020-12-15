@@ -118,4 +118,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         }
     }
+
+    @Override
+    public int restoreSchedule(int userId, int scheduled) {
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("user_id", userId);
+        qw.eq("schedule_id", scheduled);
+        Schedule schedule = new Schedule();
+        schedule.setUserId(userId);
+        schedule.setLastEditTime(new Date());
+        schedule.setBinFlag("true");
+        int rows = scheduleMapper.update(schedule, qw);
+        return rows;
+    }
 }

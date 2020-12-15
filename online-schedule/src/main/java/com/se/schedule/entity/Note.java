@@ -60,7 +60,7 @@ public class Note {
 
     @JsonProperty("delete_flag")
     @TableField("bin_flag")
-    @TableId(value = "bin_flag")
+    //@TableId(value = "bin_flag")
     private String binFlag;
 
     @JsonProperty("todo_list")

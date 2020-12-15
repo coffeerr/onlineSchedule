@@ -52,4 +52,12 @@ public interface NoteService {
      */
     int deleteNote(int userId, int noteId, boolean recycleBin);
 
+    /**
+     * @return int
+     * @author Desmand
+     * @Description: 还原记事
+     * @Date 8:58 上午 2020/12/15
+     * @Param [userId, scheduled]
+     */
+    int restoreNote(int userId, int noteId);
 }

@@ -63,7 +63,7 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteModel> getNoteList(int userId, int tagId, String statusFlag) {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", userId);
-        qw.eq("tag_id", tagId);
+        //qw.eq("tag_id", tagId);
         if (statusFlag == null || statusFlag.equals("")) {
 
         } else if (statusFlag.equals("pin")) {
@@ -137,5 +137,19 @@ public class NoteServiceImpl implements NoteService {
                 return -1;
             }
         }
+    }
+
+    @Override
+    public int restoreNote(int userId, int noteId) {
+        QueryWrapper qw = new QueryWrapper();
+        qw.eq("user_id", userId);
+        qw.eq("note_id", noteId);
+        Note note = new Note();
+        note.setUserId(userId);
+        note.setLastEditTime(new Date());
+        note.setBinFlag("true");
+        note.setNoteId(noteId);
+        int rows = noteMapper.update(note, qw);
+        return rows;
     }
 }
