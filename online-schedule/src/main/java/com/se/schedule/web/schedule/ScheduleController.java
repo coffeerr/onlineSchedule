@@ -4,6 +4,7 @@ import com.se.schedule.dto.ScheduleModel;
 import com.se.schedule.entity.Schedule;
 import com.se.schedule.service.ScheduleService;
 import com.se.schedule.util.HttpServletRequestUtil;
+import com.se.schedule.enums.ScheduleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -94,9 +95,23 @@ public class ScheduleController {
             map.put("message", "获取⽇程列表成功");
             map.put("data", list);
         } else {
-            map.put("code", "ERROR");
-            map.put("message", "获取⽇程列表失败");
-            map.put("data", -1);
+            if (statusFlag == null || statusFlag.equals("")) {
+                map.put("code", ScheduleEnum.NO_SCHEDULE_ERROR.getCode());
+                map.put("message", ScheduleEnum.NO_SCHEDULE_ERROR.getMsg());
+                map.put("data", -1);
+            } else if (statusFlag.equals("pin")) {
+                map.put("code", ScheduleEnum.NO_PIN_SCHEDULE_ERROR.getCode());
+                map.put("message", ScheduleEnum.NO_PIN_SCHEDULE_ERROR.getMsg());
+                map.put("data", -1);
+            } else if (statusFlag.equals("nopin")) {
+                map.put("code", ScheduleEnum.NO_UNPIN_SCHEDULE_ERROR.getCode());
+                map.put("message", ScheduleEnum.NO_UNPIN_SCHEDULE_ERROR.getMsg());
+                map.put("data", -1);
+            } else if (statusFlag.equals("delete")) {
+                map.put("code", ScheduleEnum.NO_RECYCLE_SCHEDULE_ERROR.getCode());
+                map.put("message", ScheduleEnum.NO_RECYCLE_SCHEDULE_ERROR.getMsg());
+                map.put("data", -1);
+            }
         }
         return map;
     }
@@ -106,15 +121,21 @@ public class ScheduleController {
     public Map<String, Object> updateSchedule(@RequestBody Schedule schedule) {
         Map<String, Object> map = new HashMap<>();
         schedule.setLastEditTime(new Date());
-        int rows = scheduleService.updateSchedule(schedule);
-        if (rows > 0) {
-            map.put("code", "OK");
-            map.put("message", "修改日程成功");
-            map.put("data", 1);
-        } else {
+        try {
+            int rows = scheduleService.updateSchedule(schedule);
+            if (rows > 0) {
+                map.put("code", "OK");
+                map.put("message", "修改日程成功");
+                map.put("data", 1);
+            } else {
+                map.put("code", "ERROR");
+                map.put("message", "修改日程失败");
+                map.put("data", -1);
+            }
+        } catch (Exception e) {
             map.put("code", "ERROR");
             map.put("message", "修改日程失败");
-            map.put("data", -1);
+            map.put("data", e.toString());
         }
         return map;
     }
@@ -134,12 +155,16 @@ public class ScheduleController {
             map.put("data", 1);
         } else if (rows == -1) {
             map.put("code", "ERROR");
-            map.put("message", "修改日程失败");
+            map.put("message", "移入回收站失败");
             map.put("data", -1);
         } else if (rows == 2) {
             map.put("code", "OK");
             map.put("message", "删除日程成功");
             map.put("data", 2);
+        } else if (rows == -2) {
+            map.put("code", "OK");
+            map.put("message", "删除日程成功");
+            map.put("data", -2);
         }
         return map;
     }
@@ -156,7 +181,7 @@ public class ScheduleController {
             map.put("data", 1);
         } else {
             map.put("code", "ERROR");
-            map.put("message", "还原日程失败");
+            map.put("message", "无回收日程");
             map.put("data", -1);
         }
         return map;

@@ -122,7 +122,7 @@ public class NoteServiceImpl implements NoteService {
             if (rows == 1) {
                 return 2;
             } else {
-                return -1;
+                return -2;
             }
         } else {
             Note note = new Note();

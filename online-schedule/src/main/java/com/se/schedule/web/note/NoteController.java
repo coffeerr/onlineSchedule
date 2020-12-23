@@ -3,6 +3,7 @@ package com.se.schedule.web.note;
 import com.se.schedule.dto.NoteModel;
 import com.se.schedule.entity.Note;
 import com.se.schedule.entity.Schedule;
+import com.se.schedule.enums.NoteEnum;
 import com.se.schedule.service.NoteService;
 import com.se.schedule.util.HttpServletRequestUtil;
 import com.se.schedule.util.StringListUtil;
@@ -85,17 +86,31 @@ public class NoteController {
         Map<String, Object> map = new HashMap<>();
         int userId = HttpServletRequestUtil.getInt(request, "user_id");
         int tagId = HttpServletRequestUtil.getInt(request, "tag_id");
-        String status_flag = HttpServletRequestUtil.getString(request, "status_flag");
-        List<NoteModel> list = noteService.getNoteList(userId, tagId, status_flag);
+        String statusFlag = HttpServletRequestUtil.getString(request, "status_flag");
+        List<NoteModel> list = noteService.getNoteList(userId, tagId, statusFlag);
 
         if (list.size() > 0) {
             map.put("code", "OK");
             map.put("message", "获取记事列表成功");
             map.put("data", list);
         } else {
-            map.put("code", "ERROR");
-            map.put("message", "获取记事列表失败");
-            map.put("data", "-1");
+            if (statusFlag == null || statusFlag.equals("")) {
+                map.put("code", NoteEnum.NO_NOTE_ERROR.getCode());
+                map.put("message", NoteEnum.NO_NOTE_ERROR.getMsg());
+                map.put("data", "-1");
+            } else if (statusFlag.equals("pin")) {
+                map.put("code", NoteEnum.NO_PIN_NOTE_ERROR.getCode());
+                map.put("message", NoteEnum.NO_PIN_NOTE_ERROR.getMsg());
+                map.put("data", "-1");
+            } else if (statusFlag.equals("nopin")) {
+                map.put("code", NoteEnum.NO_UNPIN_NOTE_ERROR.getCode());
+                map.put("message", NoteEnum.NO_UNPIN_NOTE_ERROR.getMsg());
+                map.put("data", "-1");
+            } else if (statusFlag.equals("delete")) {
+                map.put("code", NoteEnum.NO_RECYCLE_NOTE_ERROR.getCode());
+                map.put("message", NoteEnum.NO_RECYCLE_NOTE_ERROR.getMsg());
+                map.put("data", "-1");
+            }
         }
         return map;
     }
@@ -132,6 +147,10 @@ public class NoteController {
             map.put("data", 1);
         } else if (rows == -1) {
             map.put("code", "ERROR");
+            map.put("message", "移入回收站失败");
+            map.put("data", -1);
+        } else if (rows == -2) {
+            map.put("code", "ERROR");
             map.put("message", "修改记事失败");
             map.put("data", -1);
         } else if (rows == 2) {
@@ -150,11 +169,11 @@ public class NoteController {
         int rows = noteService.restoreNote(note.getUserId(), note.getNoteId());
         if (rows > 0) {
             map.put("code", "OK");
-            map.put("message", "还原日程成功");
+            map.put("message", "还原记事成功");
             map.put("data", 1);
         } else {
             map.put("code", "ERROR");
-            map.put("message", "还原日程失败");
+            map.put("message", "无回收记事");
             map.put("data", -1);
         }
         return map;

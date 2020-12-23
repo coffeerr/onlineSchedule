@@ -101,7 +101,7 @@ public class ScheduleServiceImpl implements ScheduleService {
             if (rows == 1) {
                 return 2;
             } else {
-                return -1;
+                return -2;
             }
         } else {
             Schedule schedule = new Schedule();
