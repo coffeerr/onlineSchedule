@@ -126,6 +126,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         qw.eq("schedule_id", scheduled);
         Schedule schedule = new Schedule();
         schedule.setUserId(userId);
+        schedule.setScheduleId(scheduled);
         schedule.setLastEditTime(new Date());
         schedule.setBinFlag("true");
         int rows = scheduleMapper.update(schedule, qw);

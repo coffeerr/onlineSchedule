@@ -87,8 +87,8 @@ public class NoteController {
         int userId = HttpServletRequestUtil.getInt(request, "user_id");
         int tagId = HttpServletRequestUtil.getInt(request, "tag_id");
         String statusFlag = HttpServletRequestUtil.getString(request, "status_flag");
+        try{
         List<NoteModel> list = noteService.getNoteList(userId, tagId, statusFlag);
-
         if (list.size() > 0) {
             map.put("code", "OK");
             map.put("message", "获取记事列表成功");
@@ -111,6 +111,8 @@ public class NoteController {
                 map.put("message", NoteEnum.NO_RECYCLE_NOTE_ERROR.getMsg());
                 map.put("data", "-1");
             }
+        }}catch (Exception e){
+            System.out.println(e.toString());
         }
         return map;
     }
