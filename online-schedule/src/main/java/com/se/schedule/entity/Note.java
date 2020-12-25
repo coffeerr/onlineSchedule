@@ -22,6 +22,7 @@ import java.util.Date;
 public class Note {
     @JsonProperty("note_id")
     @TableField("note_id")
+    @TableId(value = "note_id")
     private int noteId;
 
     @JsonProperty("note_title")

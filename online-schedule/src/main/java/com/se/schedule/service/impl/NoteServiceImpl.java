@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.se.schedule.dto.NoteModel;
 import com.se.schedule.entity.Note;
 import com.se.schedule.entity.Schedule;
+import com.se.schedule.entity.User;
 import com.se.schedule.mapper.NoteMapper;
+import com.se.schedule.mapper.UserMapper;
 import com.se.schedule.service.NoteService;
 import com.se.schedule.util.StringListUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.List;
 public class NoteServiceImpl implements NoteService {
     @Autowired
     private NoteMapper noteMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public int createNote(Note note) {
@@ -27,6 +31,18 @@ public class NoteServiceImpl implements NoteService {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("note_id", note.getNoteId());
         List<Note> list = noteMapper.selectList(qw);
+
+        QueryWrapper getUserQW = new QueryWrapper();
+        getUserQW.eq("user_id", note.getUserId());
+        User user = userMapper.selectOne(getUserQW);
+        int noteLimit = user.getNoteNum();
+        getUserQW.eq("bin_flag","true");
+        List<Note> noteList = noteMapper.selectList(getUserQW);
+        int curLength = noteList.size();
+        if (curLength >= noteLimit) {
+            return 999;
+        }
+
         if (list.size() > 0) {
             return -1;
         } else {
@@ -141,6 +157,17 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public int restoreNote(int userId, int noteId) {
+        QueryWrapper getUserQW = new QueryWrapper();
+        getUserQW.eq("user_id", userId);
+        User user = userMapper.selectOne(getUserQW);
+        int noteLimit = user.getNoteNum();
+        getUserQW.eq("bin_flag","true");
+        List<Note> noteList = noteMapper.selectList(getUserQW);
+        int curLength = noteList.size();
+        if (curLength <= noteLimit) {
+            return 999;
+        }
+
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", userId);
         qw.eq("note_id", noteId);

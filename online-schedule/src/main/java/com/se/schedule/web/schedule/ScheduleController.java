@@ -8,6 +8,7 @@ import com.se.schedule.enums.ScheduleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import com.se.schedule.util.DateUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -39,13 +40,24 @@ public class ScheduleController {
         Map<String, Object> map = new HashMap<>();
         schedule.getScheduleId();
         int scheduleId = scheduleService.createSchedule(schedule);
-        if (scheduleId == -1) {
+//        if (!DateUtil.isDateLegal(Integer.parseInt(
+//                schedule.getStartPoint()), Integer.parseInt(schedule.getCurPoint()), Integer.parseInt(schedule.getEndPoint()))) {
+//            map.put("code", "ERROR");
+//            map.put("message", "创建⽇程失败");
+//            map.put("data", scheduleId);
+//            return map;
+//        }
+        if (scheduleId == 999) {
             map.put("code", "ERROR");
-            map.put("message", "创建⽇程失败");
+            map.put("message", "达到日程上限");
             map.put("data", -1);
-        } else {
+        } else if (scheduleId > 0) {
             map.put("code", "OK");
             map.put("message", "创建⽇程成功");
+            map.put("data", scheduleId);
+        } else {
+            map.put("code", "ERROR");
+            map.put("message", "创建⽇程失败");
             map.put("data", scheduleId);
         }
         return map;
@@ -175,7 +187,11 @@ public class ScheduleController {
         Map<String, Object> map = new HashMap<>();
         schedule.setLastEditTime(new Date());
         int rows = scheduleService.restoreSchedule(schedule.getUserId(), schedule.getScheduleId());
-        if (rows > 0) {
+        if (rows == 999) {
+            map.put("code", "ERROR");
+            map.put("message", "达到日程上限");
+            map.put("data", -1);
+        } else if (rows > 0) {
             map.put("code", "OK");
             map.put("message", "还原日程成功");
             map.put("data", 1);

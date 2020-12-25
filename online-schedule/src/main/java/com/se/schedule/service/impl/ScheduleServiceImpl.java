@@ -2,7 +2,9 @@ package com.se.schedule.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.se.schedule.entity.Schedule;
+import com.se.schedule.entity.User;
 import com.se.schedule.mapper.ScheduleMapper;
+import com.se.schedule.mapper.UserMapper;
 import com.se.schedule.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import java.util.List;
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     ScheduleMapper scheduleMapper;
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public int createSchedule(Schedule schedule) {
@@ -28,6 +32,17 @@ public class ScheduleServiceImpl implements ScheduleService {
         qw.eq("schedule_name", schedule.getScheduleName());
         qw.ne("schedule_id", schedule.getScheduleId());
         Schedule s2 = scheduleMapper.selectOne(qw);
+
+        QueryWrapper getUser = new QueryWrapper();
+        getUser.eq("user_id", schedule.getUserId());
+        User user = userMapper.selectOne(getUser);
+        int curNum = user.getScheduleNum();
+        getUser.eq("bin_flag","true");
+        List<Schedule> scheduleList = scheduleMapper.selectList(getUser);
+        if (curNum <= scheduleList.size()) {
+            return 999;
+        }
+
         if (s2 != null) {
             return -1;
         } else {
@@ -85,6 +100,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", schedule.getUserId());
         qw.eq("schedule_id", schedule.getScheduleId());
+        Schedule schedule1 = scheduleMapper.selectOne(qw);
+//        schedule1.setBinFlag(schedule.getBinFlag());
+//        schedule1.getBarColor(schedule.get)
         int rows = scheduleMapper.update(schedule, qw);
         return rows;
     }
@@ -121,6 +139,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public int restoreSchedule(int userId, int scheduled) {
+
+        QueryWrapper getUser = new QueryWrapper();
+        getUser.eq("user_id", userId);
+        User user = userMapper.selectOne(getUser);
+        int curNum = user.getScheduleNum();
+        getUser.eq("bin_flag","true");
+        List<Schedule> scheduleList = scheduleMapper.selectList(getUser);
+        if (curNum <= scheduleList.size()) {
+            return 999;
+        }
+
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_id", userId);
         qw.eq("schedule_id", scheduled);

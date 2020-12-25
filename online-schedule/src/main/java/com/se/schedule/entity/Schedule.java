@@ -1,6 +1,7 @@
 package com.se.schedule.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Date;
 @TableName("tb_schedule")
 public class Schedule {
     @JsonProperty("schedule_id")
+    @TableId(value = "schedule_id")
     private int scheduleId;
     @JsonProperty("user_id")
     private int userId;
