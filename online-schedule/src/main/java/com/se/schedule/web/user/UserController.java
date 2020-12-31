@@ -38,6 +38,7 @@ public class UserController {
         // 获取输入的密码
         String password = userModel.getKey();
 
+
         int loginCode = userService.loginByUserNameAndPwd(userName, password);
         if (loginCode == -1) {
             map.put("code", "ERROR");
@@ -103,8 +104,10 @@ public class UserController {
         int userId = userModel.getUserId();
         // 获取输入的密码
         String password = userModel.getKey();
+        int scheduleNum = userModel.getScheduleNum();
+        int noteNum = userModel.getNoteNum();
 
-        boolean isUpdatedByAdmin = userService.updateByAdmin(userId, password);
+        boolean isUpdatedByAdmin = userService.updateByAdmin(userId, password,scheduleNum,noteNum);
         if (!isUpdatedByAdmin) {
             map.put("code", "ERROR");
             map.put("message", "管理员修改用户失败！");

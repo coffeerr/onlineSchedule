@@ -57,4 +57,8 @@ public class User implements Serializable {
     @TableField("note_num")
     private int noteNum;
 
+    @JsonProperty("tag_num")
+    @TableField("tag_num")
+    private int tagNum;
+
 }

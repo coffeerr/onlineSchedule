@@ -46,4 +46,5 @@ public class NoteModel {
     @JsonProperty("todo_list")
     @TableField("todo_list")
     private List<TodoItem> todoItemList;
+
 }

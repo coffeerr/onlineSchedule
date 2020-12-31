@@ -39,6 +39,9 @@ public class UserServiceImpl implements UserService {
         user.setPassword(pwd);
         user.setCreateTime(new Date());
         user.setUserType(1);
+        user.setScheduleNum(10);
+        user.setNoteNum(10);
+        user.setTagNum(10);
         QueryWrapper qw = new QueryWrapper();
         qw.eq("user_name", userName);
         User user2 = userMapper.selectOne(qw);
@@ -78,12 +81,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean updateByAdmin(int userId, String pwd) {
+    public boolean updateByAdmin(int userId, String pwd,int scheduleNum,int noteNum) {
         QueryWrapper qw1 = new QueryWrapper();
         qw1.eq("user_id", userId);
         User user = new User();
         user.setUserId(userId);
         user.setPassword(pwd);
+        user.setScheduleNum(scheduleNum);
+        user.setNoteNum(noteNum);
         int rows = userMapper.update(user, qw1);
         if (rows > 0) {
             return true;

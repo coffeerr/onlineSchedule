@@ -42,7 +42,7 @@ public class NoteController {
             map.put("data", rows);
         } else if (rows > 0) {
             map.put("code", "OK");
-            map.put("message", "创建日程成功");
+            map.put("message", "创建记事成功");
             map.put("data", rows);
         } else {
             map.put("code", "ERROR");

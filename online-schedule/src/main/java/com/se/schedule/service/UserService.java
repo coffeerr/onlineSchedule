@@ -38,5 +38,5 @@ public interface UserService {
      * @Date 6:04 下午 2020/11/28
      * @Param [userId, pwd]
      */
-    boolean updateByAdmin(int userId, String pwd);
+    boolean updateByAdmin(int userId, String pwd,int scheduleNum,int noteNum);
 }

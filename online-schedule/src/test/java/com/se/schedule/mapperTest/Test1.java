@@ -56,7 +56,7 @@ public class Test1 {
     @Test
     @Ignore
     public void testUpdateByAdmin() {
-        System.out.println(userService.updateByAdmin(13,"123"));
+        System.out.println(userService.updateByAdmin(19,"123",20,20));
 
     }
 

@@ -1,5 +1,6 @@
 package com.se.schedule.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,4 +31,16 @@ public class UserModel {
 
     private Date createDate;
     private Date lastEditDate;
+
+    @JsonProperty("schedule_num")
+    @TableField("schedule_num")
+    private int scheduleNum;
+
+    @JsonProperty("note_num")
+    @TableField("note_num")
+    private int noteNum;
+
+    @JsonProperty("tag_num")
+    @TableField("tag_num")
+    private int tagNum;
 }

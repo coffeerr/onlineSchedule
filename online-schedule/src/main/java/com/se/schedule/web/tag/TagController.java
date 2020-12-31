@@ -35,15 +35,19 @@ public class TagController {
     public Map<String, Object> createTag(@RequestBody Tag tag) {
         tag.setCreateTime(new Date());
         Map<String, Object> map = new HashMap<>();
-        int tagId = tagService.createTag(tag);
-        if (tagId == -1) {
+        int rows = tagService.createTag(tag);
+        if (rows == -1) {
             map.put("code", "ERROR");
             map.put("message", "创建标签失败");
             map.put("data", -1);
+        } else if(rows == -2){
+            map.put("code", "OK");
+            map.put("message", "不能创建相同标签！");
+            map.put("data", -2);
         } else {
             map.put("code", "OK");
             map.put("message", "创建标签成功");
-            map.put("data", tagId);
+            map.put("data", rows);
         }
         return map;
     }

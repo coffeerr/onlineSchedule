@@ -36,7 +36,7 @@ public class AdminServiceImpl implements AdminService {
         qw.orderByAsc("user_id");
         List<User> list = userMapper.selectList(qw);
         List<User> returnList = new ArrayList<>();
-        for (int i = startNum; i <= endNum; i++) {
+        for (int i = startNum; i < endNum; i++) {
             returnList.add(list.get(i));
         }
         return returnList;

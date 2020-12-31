@@ -27,6 +27,10 @@ public class TagServiceImpl implements TagService {
             QueryWrapper qw = new QueryWrapper();
             qw.eq("user_id", tag.getUserId());
             qw.eq("tag_title", tag.getTagTitle());
+            List<Tag> list = tagMapper.selectList(qw);
+            if(list.size()>0){
+                return -2;
+            }
             Tag returnTag = tagMapper.selectOne(qw);
             return tag.getTagId();
         } else {
