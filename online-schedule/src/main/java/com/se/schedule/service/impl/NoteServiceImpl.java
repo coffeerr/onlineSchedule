@@ -36,7 +36,7 @@ public class NoteServiceImpl implements NoteService {
         getUserQW.eq("user_id", note.getUserId());
         User user = userMapper.selectOne(getUserQW);
         int noteLimit = user.getNoteNum();
-        getUserQW.eq("bin_flag","true");
+        getUserQW.eq("bin_flag", "true");
         List<Note> noteList = noteMapper.selectList(getUserQW);
         int curLength = noteList.size();
         if (curLength >= noteLimit) {
@@ -90,6 +90,9 @@ public class NoteServiceImpl implements NoteService {
             qw.eq("bin_flag", "true");
         } else if (statusFlag.equals("delete")) {
             qw.eq("bin_flag", "false");
+        }
+        if (tagId != 0) {
+            qw.eq("tag_id", tagId);
         }
         List<Note> list = noteMapper.selectList(qw);
         List<NoteModel> noteModels = new ArrayList<>();
@@ -161,7 +164,7 @@ public class NoteServiceImpl implements NoteService {
         getUserQW.eq("user_id", userId);
         User user = userMapper.selectOne(getUserQW);
         int noteLimit = user.getNoteNum();
-        getUserQW.eq("bin_flag","true");
+        getUserQW.eq("bin_flag", "true");
         List<Note> noteList = noteMapper.selectList(getUserQW);
         int curLength = noteList.size();
         if (curLength <= noteLimit) {
