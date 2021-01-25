@@ -11,5 +11,5 @@ public interface SearchService {
      * @Date 9:58 上午 2020/12/1
      * @Param [keyWord]
      */
-    Map<String, List> getSearchKeyWord(String keyWord);
+    Map<String, List> getSearchKeyWord(String keyWord,int userId);
 }

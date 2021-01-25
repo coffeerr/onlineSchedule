@@ -60,4 +60,6 @@ public interface NoteService {
      * @Param [userId, scheduled]
      */
     int restoreNote(int userId, int noteId);
+
+    List<NoteModel> getNoteListBySearch(String noteTitle,int userId);
 }

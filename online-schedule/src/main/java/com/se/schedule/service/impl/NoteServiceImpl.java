@@ -182,4 +182,36 @@ public class NoteServiceImpl implements NoteService {
         int rows = noteMapper.update(note, qw);
         return rows;
     }
+
+
+
+
+    @Override
+    public List<NoteModel> getNoteListBySearch(String noteTitle,int userId) {
+        QueryWrapper qw = new QueryWrapper();
+        qw.like("note_title", noteTitle);
+        qw.eq("user_id",userId);
+        List<Note> list = noteMapper.selectList(qw);
+        List<NoteModel> noteModels = new ArrayList<>();
+        for (Note curNote : list) {
+            NoteModel noteModel = new NoteModel();
+            noteModel.setNoteId(curNote.getNoteId());
+            noteModel.setLastEditTime(curNote.getLastEditTime());
+            noteModel.setNoteTitle(curNote.getNoteTitle());
+            boolean pinFlag = curNote.getPinFlag().equals("true") ? true : false;
+            boolean recycleBin = curNote.getBinFlag().equals("true") ? true : false;
+            noteModel.setPinFlag(pinFlag);
+            noteModel.setRecycleBin(recycleBin);
+            noteModel.setTagId(curNote.getTagId());
+            noteModel.setRemarks(curNote.getRemarks());
+            noteModel.setTodoItemList(StringListUtil.getTodoItemListByNote(curNote, curNote.getTodoList()));
+            noteModel.setUserId(curNote.getUserId());
+            noteModels.add(noteModel);
+        }
+        if (list.size() > 0) {
+            return noteModels;
+        } else {
+            return null;
+        }
+    }
 }

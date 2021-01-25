@@ -30,7 +30,8 @@ public class SearchController {
     @ResponseBody
     private Map<String, Object> searchKeyWord(HttpServletRequest request) {
         String keyword = HttpServletRequestUtil.getString(request, "key");
-        Map<String, List> returnMap = searchService.getSearchKeyWord(keyword);
+        int userId = HttpServletRequestUtil.getInt(request,"user_id");
+        Map<String, List> returnMap = searchService.getSearchKeyWord(keyword,userId);
         Map<String, Object> map = new HashMap<>();
         if (returnMap.get("schedule_data").size() < 1 && returnMap.get("note_data").size() < 1) {
             map.put("code", "ERROR");
